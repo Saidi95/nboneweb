@@ -1,0 +1,141 @@
+body {
+    background-color: wheat;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* espace entre les champs */
+    max-width: 300px; /* largeur fixe sympa */
+    width: 100%;
+    text-align: center;
+}
+
+.btn-block{
+    width: 100%;
+}
+
+.security-form{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    width:100%;
+    height:100vh;
+}
+
+h1,h2 {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+}
+.card {
+    color:black; /* couleur du texte principale dans la carte */
+}
+
+.card-title {
+    color: #003366; /* couleur du titre */
+}
+
+.card-text {
+    color:black; /* couleur du texte descriptif */
+}
+
+
+.logo-navbar {
+    height: 80px;
+    transform: scale(1.6);
+    transform-origin: center;
+}
+
+
+@media (max-width: 768px) {
+    .logo-navbar {
+        height: 30px;
+    }
+}
+.navbar {
+    background-color: #FFFFFF;
+    color: #003366;
+    border-bottom: 1px solid #E0E0E0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.navbar a {
+    color: black;
+}
+
+.btn-primary {
+    background-color: #F4C430;
+    border-color: #F4C430;
+    color: #003366;
+}
+.carousel-item {
+    height: 400px;       /* par exemple */
+}
+.carousel-item img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .nav-link:active,
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus,
+.navbar .dropdown-item:active,
+.navbar .btn:hover,
+.navbar .btn:focus,
+.navbar .btn:active {
+    background: none !important;
+    color: inherit !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
+
+footer {
+    background-color: #222;
+    color: #eee;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.footer-links a {
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+.product-price {
+    color: #C21807; /* rouge élégant */
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+
+
+
+
+
+

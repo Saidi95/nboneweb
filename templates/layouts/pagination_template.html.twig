@@ -1,0 +1,17 @@
+<nav>
+    <ul class="pagination justify-content-center">
+        {% if previous is defined %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">Précédent</a>
+            </li>
+        {% endif %}
+
+
+
+        {% if next is defined %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): next})) }}">Suivant</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

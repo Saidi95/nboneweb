@@ -1,0 +1,20 @@
+<h1>Messages reçus</h1>
+<ul id="messagesList"></ul>
+
+<script>
+    async function fetchMessages() {
+        const response = await fetch('{{ path('admin_messages_json') }}');
+        const data = await response.json();
+        const list = document.getElementById('messagesList');
+        list.innerHTML = '';
+        data.forEach(msg => {
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${msg.name}</strong> (${msg.email}) :
+                        <p>${msg.message}</p>
+                        <small>${msg.createdAt}</small>`;
+            list.appendChild(li);
+        });
+    }
+    fetchMessages();
+    setInterval(fetchMessages, 5000); // rafraîchissement toutes les 5s
+</script>

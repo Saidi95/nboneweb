@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ subcategory.name }}</h1>
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ asset('uploads/images/' ~ product.image) }}" class="card-img-top product-image" alt="...">
+                        <div class="card-body">
+                            <a style="text-decoration: none; color:green " href="{{ path('app_home_product_show', {'id': product.id}) }}">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                            </a>
+                            <p class="card-text">{{ product.description|slice(0,60) }}...</p>
+                            <h3 class="product-price">{{ product.price }} EUR</h3>
+                            <a href="#" class="text-success">Add to Card</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

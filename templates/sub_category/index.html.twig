@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SubCategory index{% endblock %}
+
+{% block body %}
+    <div class="container"><br><br>
+        <h1>Sous categories</h1><br><br>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Catégories</th>
+                <th>Actions</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for sub_category in sub_categories %}
+                <tr>
+                    <td>{{ sub_category.id }}</td>
+                    <td>{{ sub_category.name }}</td>
+                    <td>{{ sub_category.category.name }}</td>
+
+                    <td>
+                        <a class="btn btn-outline-primary" href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}">Show</a>
+                        <a class="btn btn-danger" href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_sub_category_new') }}" class="btn btn-primary"> Ajouter une nouvelle sous-catégorie</a>
+    </div>
+{% endblock %}

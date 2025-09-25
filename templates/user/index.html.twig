@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateur!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Utilisateurs</h1>
+
+        {% include 'layouts/_flash_message.html.twig' %}
+
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Rôle</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            Administrateur
+                        {% elseif 'ROLE_EDITOR' in user.roles %}
+                            Éditeur
+                        {% else %}
+                            Client
+                        {% endif %}
+                    </td>
+                    <td>
+                        {# Gestion des rôles éditeur (uniquement si non admin) #}
+                        {% if 'ROLE_ADMIN' not in user.roles %}
+                            {% if 'ROLE_EDITOR' not in user.roles %}
+                                <a href="{{ path('app_user_to_editor', {'id': user.id}) }}"
+                                   class="btn btn-outline-primary btn-sm"
+                                   onclick="return confirm('Voulez-vous vraiment affecter le rôle éditeur à cet utilisateur ?')">
+                                    Ajouter comme éditeur
+                                </a>
+                            {% else %}
+                                <a href="{{ path('app_user_remove_editor_role', {'id': user.id}) }}"
+                                   class="btn btn-warning btn-sm"
+                                   onclick="return confirm('Voulez-vous vraiment retirer le rôle éditeur à cet utilisateur ?')">
+                                    Retirer le rôle éditeur
+                                </a>
+                            {% endif %}
+                        {% endif %}
+
+                        {# Bouton supprimer : affiché pour tout le monde sauf les admins #}
+                        {% if 'ROLE_ADMIN' not in user.roles %}
+                            <form method="post"
+                                  action="{{ path('app_user_delete', {'id': user.id}) }}"
+                                  style="display:inline-block"
+                                  onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                                <button class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
+                        {% else %}
+                            <button class="btn btn-danger btn-sm" disabled title="Impossible de supprimer un administrateur">
+                                Supprimer
+                            </button>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

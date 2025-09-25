@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits{% endblock %}
+
+{% block body %}
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel"><br>
+
+
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="10000">
+                <img src="{{ asset('uploads/images/slide1.png') }}"
+                     class="d-block w-75 mx-auto img-fluid"
+                     alt=" ">
+
+            </div>
+            <div class="carousel-item" data-bs-interval="2000">
+                <img src="{{ asset('uploads/images/slide2.png') }}"
+                     class="d-block w-75 mx-auto img-fluid"
+                     alt="Nouvelle collection">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('uploads/images/slide3.png') }}"
+                     class="d-block w-75 mx-auto img-fluid"
+                     alt="Offres spéciales">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Précédent</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Suivant</span>
+        </button>
+    </div><br>
+
+    <div class="container">
+        <h1 class="text-center my-4">Nouvelle collection</h1>
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 d-flex flex-column justify-content-between">
+                        <a href="{{ path('app_home_product_show', {'id': product.id}) }}">
+                            <img src="{{ asset('uploads/images/' ~ product.image) }}"
+                                 class="card-img-top"
+                                 alt="{{ product.name }}">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ path('app_home_product_show', {'id': product.id}) }}"
+                                   class="text-decoration-none text-dark">
+                                    {{ product.name }}
+                                </a>
+                            </h5>
+                            <p class="card-text">
+                                {{ product.description|striptags|slice(0,60) }}...
+                            </p>
+                            <h3 class="product-price">{{ product.price }} EUR</h3>
+
+                            <a href="#" class="btn btn-outline-success" aria-label="Ajouter {{ product.name }} au panier">
+                                Ajouter au panier
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>Aucun produit disponible.</p>
+            {% endfor %}
+
+            {{ knp_pagination_render(products, 'layouts/pagination_template.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

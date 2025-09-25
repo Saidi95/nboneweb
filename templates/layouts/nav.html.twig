@@ -1,0 +1,95 @@
+<nav class="navbar navbar-expand-lg custom-navbar" data-bs-theme="dark">
+    <div class="container">
+
+        {# Logo cliquable qui renvoie à l’accueil #}
+        <a class="navbar-brand" href="{{ path('app_home') }}">
+            <img src="{{ asset('uploads/images/logo.png') }}" alt="logo" class="logo-navbar">
+        </a>
+
+        {# Bouton burger sur mobile #}
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height:100px;">
+
+                {# --- Menu Catégories --- #}
+                {% if categories is defined %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="categoriesDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Catégories
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                            {% for category in categories %}
+                                <li>
+                                    <a class="dropdown-item text-success fw-bold" href="#">
+                                        {{ category.name }}
+                                    </a>
+                                </li>
+
+                                {% for subCategory in category.subCategories %}
+                                    <li>
+                                        <a class="dropdown-item"
+                                           href="{{ path('app_home_product_filter', {'id': subCategory.id}) }}">
+                                            {{ subCategory.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+
+                                <li><hr class="dropdown-divider"></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
+
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="adminDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Administration
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                            <li><a class="dropdown-item" href="{{ path('app_category') }}">Catégories</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_category_new') }}">Ajouter une catégorie</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_sub_category_index') }}">Sous-catégories</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_sub_category_new') }}">Créer une sous-catégorie</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ path('app_product_index') }}">Produits</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ path('app_user') }}">Utilisateurs</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+
+                {# --- Liens Auth --- #}
+                {% if app.user == false %}
+                    <li class="nav-item me-2">
+                        <a href="{{ path('app_register') }}" class="nav-link">S'inscrire</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_login') }}" class="nav-link">Se connecter</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+            {# --- Barre de recherche --- #}
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
