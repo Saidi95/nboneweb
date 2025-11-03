@@ -1,32 +1,35 @@
-﻿# Utilise une image officielle PHP avec Apache
-FROM php:8.2-apache
+﻿# ---------- Étape 1 : Builder (Composer + dépendances) ----------
+FROM php:8.2-cli AS builder
 
-# Installe les dépendances système et extensions PHP nécessaires
 RUN apt-get update && apt-get install -y git unzip libicu-dev libzip-dev libonig-dev libxml2-dev && \
     docker-php-ext-install intl pdo pdo_mysql zip opcache mbstring xml && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Active mod_rewrite pour Symfony
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+WORKDIR /app
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction --no-progress
+
+COPY . /app
+RUN php bin/console cache:clear --env=prod --no-debug
+
+# ---------- Étape 2 : Image finale Apache + PHP ----------
+FROM php:8.2-apache
+
+RUN apt-get update && apt-get install -y libicu-dev libzip-dev libonig-dev libxml2-dev unzip && \
+    docker-php-ext-install intl pdo pdo_mysql zip opcache mbstring xml && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 RUN a2enmod rewrite
-
-# Définit le dossier de travail
 WORKDIR /var/www/html
-
-# Copie le code source
 COPY . /var/www/html/
-
-# Ajuste les permissions pour Apache
+COPY --from=builder /app/vendor /var/www/html/vendor
+COPY --from=builder /app/var/cache /var/www/html/var/cache
 RUN chown -R www-data:www-data /var/www/html
 
-# Installe Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-# Configure Apache pour servir Symfony depuis /public
-RUN echo "<Directory /var/www/html/public>\n    AllowOverride All\n</Directory>" > /etc/apache2/conf-available/symfony.conf && \
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf && \
+    echo "<Directory /var/www/html/public>\n    AllowOverride All\n    Require all granted\n</Directory>" > /etc/apache2/conf-available/symfony.conf && \
     a2enconf symfony
 
-# Expose le port 80
 EXPOSE 80
-
-# Commande de démarrage
 CMD ["apache2-foreground"]
