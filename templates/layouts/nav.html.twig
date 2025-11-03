@@ -1,12 +1,10 @@
 <nav class="navbar navbar-expand-lg custom-navbar" data-bs-theme="dark">
     <div class="container">
 
-        {# Logo cliquable qui renvoie à l’accueil #}
         <a class="navbar-brand" href="{{ path('app_home') }}">
             <img src="{{ asset('uploads/images/logo.png') }}" alt="logo" class="logo-navbar">
         </a>
 
-        {# Bouton burger sur mobile #}
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                 aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,7 +14,6 @@
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height:100px;">
 
-                {# --- Menu Catégories --- #}
                 {% if categories is defined %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"
@@ -50,7 +47,6 @@
                     </li>
                 {% endif %}
 
-
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"
@@ -73,23 +69,24 @@
                         </ul>
                     </li>
                 {% endif %}
-
-                {# --- Liens Auth --- #}
-                {% if app.user == false %}
-                    <li class="nav-item me-2">
-                        <a href="{{ path('app_register') }}" class="nav-link">S'inscrire</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ path('app_login') }}" class="nav-link">Se connecter</a>
-                    </li>
-                {% endif %}
             </ul>
 
-            {# --- Barre de recherche --- #}
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            {# Bloc utilisateur à droite #}
+            {% if app.user %}
+                <div class="d-flex align-items-center ms-auto">
+                    <span class="text-light me-3 fw-semibold">
+                        Bonjour, {{ app.user.firstname|default('Utilisateur') }}
+                    </span>
+                    <form action="{{ path('app_logout') }}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-outline-warning btn-sm">Déconnexion</button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="d-flex align-items-center ms-auto">
+                    <a href="{{ path('app_register') }}" class="btn btn-outline-light btn-sm me-2">S'inscrire</a>
+                    <a href="{{ path('app_login') }}" class="btn btn-outline-light btn-sm">Se connecter</a>
+                </div>
+            {% endif %}
         </div>
     </div>
 </nav>

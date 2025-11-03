@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Mon panier</h1>
+
+        {% if items is empty %}
+            <div class="alert alert-info">
+                Aucun élément dans le panier.
+            </div>
+            <a href="{{ path('app_home') }}" class="btn btn-outline-success">
+                ← Continuer mes achats
+            </a>
+        {% else %}
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.product.price }} €</td>
+                        <td>{{ item.product.price * item.quantity }} €</td>
+                        <td>
+                            {# bouton -1 #}
+                            <form action="{{ path('app_cart_decrease', {'id': item.product.id}) }}" method="post" style="display:inline;">
+                                <button class="btn btn-sm btn-warning">-1</button>
+                            </form>
+
+                            <a href="{{ path('app_cart_remove', {'id': item.product.id}) }}"
+                               class="btn btn-sm btn-danger">
+                                🗑 Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <a href="{{ path('app_home') }}" class="btn btn-outline-success">
+                    ← Continuer mes achats
+                </a>
+
+                <h3>Total : {{ total }} €</h3>
+
+                {% if items is not empty %}
+                    <form id="payment-form">
+                        <button type="submit" id="pay-btn" class="btn btn-success">
+                            💳 Payer ma commande
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    {# Stripe.js #}
+    <script src="https://js.stripe.com/v3/"></script>
+
+    {% if stripe_public_key is defined and stripe_public_key %}
+        <script>
+            const stripe = Stripe("{{ stripe_public_key }}");
+
+            const form = document.getElementById('payment-form');
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const response = await fetch("{{ path('app_payment') }}", {
+                        method: "POST",
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest"
+                        }
+                    });
+
+                    const session = await response.json();
+
+                    if (session.id) {
+                        await stripe.redirectToCheckout({ sessionId: session.id });
+                    } else {
+                        alert("❌ Erreur : impossible de créer la session de paiement.");
+                    }
+                });
+            }
+        </script>
+    {% else %}
+        <script>
+            console.warn("⚠️ Stripe public key non définie. Paiement désactivé.");
+            const payBtn = document.getElementById('pay-btn');
+            if (payBtn) {
+                payBtn.disabled = true;
+                payBtn.innerText = "Paiement indisponible";
+            }
+        </script>
+    {% endif %}
+{% endblock %}

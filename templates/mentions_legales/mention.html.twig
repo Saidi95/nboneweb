@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions légales{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('/css/legales.css') }}">
+
+    <div class="mentions-legales">
+    <h1>Mentions légales</h1>
+
+    <section>
+        <h2>Éditeur du site</h2>
+        <p>
+            <strong>NB-ONE</strong><br>
+            Représenté par : Saidi<br>
+            Adresse : [Ton adresse professionnelle]<br>
+            Email : contact@nb-one.fr<br>
+            SIRET : [Ton numéro SIRET]<br>
+            Code APE : [Ton code APE]<br>
+            Statut : Auto-entrepreneur / Société [à adapter]
+        </p>
+    </section>
+
+    <section>
+        <h2>Hébergement</h2>
+        <p>
+            Hébergeur : IONOS SARL<br>
+            Adresse : 7 Place de la Gare, 57200 Sarreguemines, France<br>
+            Téléphone : +33 970 808 911
+        </p>
+    </section>
+
+    <section>
+        <h2>Propriété intellectuelle</h2>
+        <p>
+            Tous les éléments du site NB-ONE (textes, images, graphismes, logos, vidéos, code source) sont protégés par le droit d’auteur et le droit des marques.<br>
+            Toute reproduction, représentation ou diffusion, même partielle, sans autorisation préalable est interdite.
+        </p>
+    </section>
+
+    <section>
+        <h2>Données personnelles</h2>
+        <p>
+            Les données collectées via le formulaire de contact sont utilisées uniquement pour répondre aux demandes des utilisateurs.<br>
+            Conformément au RGPD, vous disposez d’un droit d’accès, de rectification et de suppression de vos données. Pour exercer ce droit, contactez-nous à : <strong>contact@nb-one.fr</strong>.
+        </p>
+    </section>
+
+    <section>
+        <h2>Cookies</h2>
+        <p>
+            Ce site utilise des cookies pour améliorer l’expérience utilisateur et analyser le trafic. Vous pouvez gérer vos préférences via les paramètres de votre navigateur.
+        </p>
+    </section>
+
+    <section>
+        <h2>Responsabilité</h2>
+        <p>
+            NB-ONE s’efforce de fournir des informations fiables et à jour, mais ne saurait être tenu responsable des erreurs ou omissions, ni des éventuels dysfonctionnements techniques du site.
+        </p>
+    </section>
+
+    <section>
+        <h2>Crédits</h2>
+        <p>
+            Direction artistique, design et développement : <strong>Saidi</strong><br>
+            Technologies utilisées : Symfony, HTML/CSS, MongoDB, Docker
+        </p>
+    </section>
+</div>
+{% endblock %}

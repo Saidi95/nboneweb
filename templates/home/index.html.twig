@@ -7,13 +7,13 @@
 
 
         <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
+            <div class="carousel-item active" data-bs-interval="9000">
                 <img src="{{ asset('uploads/images/slide1.png') }}"
                      class="d-block w-75 mx-auto img-fluid"
                      alt=" ">
 
             </div>
-            <div class="carousel-item" data-bs-interval="2000">
+            <div class="carousel-item" data-bs-interval="10500">
                 <img src="{{ asset('uploads/images/slide2.png') }}"
                      class="d-block w-75 mx-auto img-fluid"
                      alt="Nouvelle collection">
@@ -57,9 +57,14 @@
                             </p>
                             <h3 class="product-price">{{ product.price }} EUR</h3>
 
-                            <a href="#" class="btn btn-outline-success" aria-label="Ajouter {{ product.name }} au panier">
-                                Ajouter au panier
-                            </a>
+                            <form action="{{ path('app_cart_add', {'id': product.id}) }}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-outline-success">
+                                    Ajouter au panier
+                                </button>
+                            </form>
+
+
+
                         </div>
                     </div>
                 </div>

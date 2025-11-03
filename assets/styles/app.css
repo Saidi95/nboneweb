@@ -133,6 +133,29 @@ footer {
     font-size: 1.4rem;
 }
 
+.navbar-toggler {
+    position: relative;
+    width: 30px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.3s ease;
+}
+
+.navbar-toggler span {
+    display: block;
+    height: 16px;
+    width: 100%;
+    background-color: #111; /* couleur harmonisée avec ton footer */
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
 
 
 

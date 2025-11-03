@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement annulé{% endblock %}
+
+{% block body %}
+    <div class="container text-center mt-5">
+        <h1 class="text-danger">{{ message }}</h1>
+        <a href="{{ path('app_cart') }}" class="btn btn-outline-danger mt-4">
+            Retour au panier
+        </a>
+    </div>
+{% endblock %}

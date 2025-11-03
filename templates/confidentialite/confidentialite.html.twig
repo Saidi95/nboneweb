@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confidentialité{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/confidentialite.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="confidentialite">
+        <h1>Politique de confidentialité</h1>
+
+        <section>
+            <h2>Collecte des données</h2>
+            <p>
+                Le site NB-ONE collecte des données personnelles via le formulaire de contact, uniquement dans le but de répondre aux demandes des utilisateurs. Aucune donnée n’est vendue, cédée ou utilisée à des fins commerciales non déclarées.
+            </p>
+        </section>
+
+        <section>
+            <h2>Type de données collectées</h2>
+            <p>
+                Les données collectées peuvent inclure : nom, prénom, adresse email, numéro de téléphone, et toute information transmise volontairement via le formulaire.
+            </p>
+        </section>
+
+        <section>
+            <h2>Utilisation des données</h2>
+            <p>
+                Les données sont utilisées exclusivement pour :
+            <ul>
+                <li>Répondre aux demandes de contact</li>
+                <li>Assurer le suivi des échanges</li>
+                <li>Améliorer l’expérience utilisateur</li>
+            </ul>
+            </p>
+        </section>
+
+        <section>
+            <h2>Durée de conservation</h2>
+            <p>
+                Les données sont conservées pendant une durée maximale de 12 mois, sauf obligation légale ou demande explicite de suppression.
+            </p>
+        </section>
+
+        <section>
+            <h2>Vos droits</h2>
+            <p>
+                Conformément au RGPD, vous disposez d’un droit d’accès, de rectification, de suppression et de portabilité de vos données. Pour exercer ces droits, contactez-nous à : <a href="mailto:contact@nb-one.fr">contact@nb-one.fr</a>.
+            </p>
+        </section>
+
+        <section>
+            <h2>Cookies</h2>
+            <p>
+                Le site utilise des cookies pour améliorer la navigation et analyser le trafic. Vous pouvez configurer vos préférences via les paramètres de votre navigateur.
+            </p>
+        </section>
+
+        <section>
+            <h2>Sécurité</h2>
+            <p>
+                NB-ONE met en œuvre des mesures techniques et organisationnelles pour garantir la sécurité des données collectées et éviter tout accès non autorisé.
+            </p>
+        </section>
+    </div>
+{% endblock %}

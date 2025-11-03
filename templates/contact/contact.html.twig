@@ -1,4 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contactez-nous</title>
+
+        <link rel="stylesheet" href="{{ asset('css/contact.css') }}">
+
+</head>
+<body>
+
 <h1>Contactez-nous</h1>
+
 <form id="contactForm" method="POST" action="{{ path('contact') }}">
     <input type="text" name="name" placeholder="Nom" required>
     <input type="email" name="email" placeholder="Email" required>
@@ -22,3 +35,6 @@
         }
     });
 </script>
+
+</body>
+</html>
